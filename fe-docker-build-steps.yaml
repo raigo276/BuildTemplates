@@ -1,0 +1,41 @@
+parameters:
+- name: outputpath
+  default: './out'
+
+steps:
+
+- bash: |
+    ls -la $(Build.ArtifactStagingDirectory)/*
+    mkdir ${{ parameters.outputpath }}
+    cp -R $(Build.ArtifactStagingDirectory)/* ${{ parameters.outputpath }}
+  displayName: Copy published files
+  #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+
+- bash: |
+    cat > Dockerfile << EOF
+    FROM nginx:latest
+    WORKDIR /usr/share/nginx/html
+    ADD ${{ parameters.outputpath }} ./
+    EXPOSE 80
+    EOF
+  displayName: Create Dockerfile
+  #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+
+- task: Docker@2
+  #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+  displayName: Login to ACR
+  inputs:
+    command: login
+    containerRegistry: 'TestAciContainerRegistry'
+
+- task: Docker@2
+  #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+  displayName: Docker build and push
+  inputs:
+    containerRegistry: 'TestAciContainerRegistry'
+    repository: '$(Build.Repository.Name)'
+    command: 'buildAndPush'
+    tags: |
+      $(GitVersion.SemVer)
+      latest
+    Dockerfile: '**/Dockerfile'
