@@ -1,7 +1,18 @@
+variables:
+    projectRoot: 'src'
+    artifactName: 'fe-ng-artifact'    
+
 steps:
+- task: CopyFiles@2
+  displayName: 'Copy dist to artifacts'
+  inputs:
+    SourceFolder: '$(projectRoot)/dist'
+    Contents: '**'
+    TargetFolder: '$(build.artifactstagingdirectory)/dist'
+    cleanTargetFolder: true
+
 - task: PublishPipelineArtifact@1
   displayName: 'publish artifact'
-#  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)'
-    artifactName: fe-ng-artifact
+    artifactName: '$(artifactName)'
