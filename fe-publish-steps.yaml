@@ -1,7 +1,10 @@
+variables:
+  myVariable: $[replace(variables['Build.Repository.Name'], 'raigo276/', '')]
+
 steps:
 - task: PublishPipelineArtifact@1
   displayName: 'publish artifact'
 #  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)'
-    artifactName: $[replace(variables['Build.Repository.Name'], 'raigo276/', '')]
+    artifactName: $(myVariable)
