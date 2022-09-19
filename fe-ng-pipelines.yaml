@@ -6,7 +6,7 @@ jobs:
   steps:
   - bash: |
       apt-get install curl
-      curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash 
+      curl -fsSL https://deb.nodesource.com/setup_18.x | -E bash 
       apt-get install -y nodejs
     displayName: 'install nodejs'
 
