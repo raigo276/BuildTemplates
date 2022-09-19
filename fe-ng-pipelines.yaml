@@ -4,7 +4,7 @@ jobs:
     vmImage: 'ubuntu-latest'
 
   steps:
-  - task: NodeTool@
+  - task: NodeTool@1
     inputs:
       versionSpec: '10.x'
     displayName: 'Install Node.js'
