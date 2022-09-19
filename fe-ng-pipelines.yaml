@@ -4,7 +4,7 @@ jobs:
     vmImage: 'ubuntu-latest'
 
   steps:
-  - script: |
+  - bash: |
       apt-get install curl
       curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash 
       apt-get install -y nodejs
