@@ -3,6 +3,10 @@ jobs:
   pool:
     vmImage: 'ubuntu-latest'
 
+  variables:
+    projectRoot: 'src'
+    artifactName: 'fe-ng-artifact'   
+
   steps:
   - task: NodeTool@0
     inputs:
