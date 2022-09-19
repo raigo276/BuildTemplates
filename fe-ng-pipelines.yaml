@@ -4,11 +4,10 @@ jobs:
     vmImage: 'ubuntu-latest'
 
   steps:
-  - bash: |
-      apt-get install curl
-      curl -fsSL https://deb.nodesource.com/setup_18.x | -E bash 
-      apt-get install -y nodejs
-    displayName: 'install nodejs'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '14.x'
+    displayName: 'Install Node.js'
 
   - script: |
       npm install -g @angular/cli
