@@ -16,3 +16,4 @@ jobs:
     displayName: 'npm install and build'
 
   - template: fe-publish-steps.yaml
+  - template: fe-docker-build-steps.yaml
