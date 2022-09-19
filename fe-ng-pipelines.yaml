@@ -14,7 +14,6 @@ jobs:
       npm install
       npm run build:prod
     displayName: 'npm install and build'
-    workingDirectory: $(System.DefaultWorkingDirectory)/$(Build.Repository.Name)
 
   - template: fe-publish-steps.yaml
   - template: fe-docker-build-steps.yaml
