@@ -12,7 +12,7 @@ jobs:
   - script: |
       npm install -g @angular/cli
       npm install
-      npm run build:prod
+      ng build $(Build.Repository.Name) --configuration production --output-path='$(Build.ArtifactStagingDirectory)'
     displayName: 'npm install and build'
     workingDirectory: $(System.DefaultWorkingDirectory)/$(Build.Repository.Name)
 
