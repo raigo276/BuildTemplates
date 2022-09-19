@@ -6,7 +6,7 @@ jobs:
   steps:
   - task: NodeTool@1
     inputs:
-      versionSpec: '10.x'
+      versionSpec: '18.x'
     displayName: 'Install Node.js'
 
   - script: |
