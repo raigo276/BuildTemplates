@@ -14,10 +14,12 @@ jobs:
     displayName: 'Install Node.js'
 
   - script: |
+      cd angular-test-fe/
       npm install -g @angular/cli
       npm install
-      npm run build:prod
+      ng build --prod
     displayName: 'npm install and build'
+    workingDirectory: '$(Build.SourcesDirectory)'
 
   - template: fe-publish-steps.yaml
   - template: fe-docker-build-steps.yaml

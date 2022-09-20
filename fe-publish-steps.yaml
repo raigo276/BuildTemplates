@@ -1,14 +1,14 @@
 steps:
-- task: CopyFiles@2
+- task: CopyPublishBuildArtifacts@1
   displayName: 'Copy dist to artifacts'
   inputs:
-    SourceFolder: '$(projectRoot)/dist'
+    CopyRoot: /dist
     Contents: '**'
-    TargetFolder: '$(build.artifactstagingdirectory)/dist'
-    cleanTargetFolder: true
+    ArtifactName: '$(artifactName)'
+    ArtifactType: Container
 
-- task: PublishPipelineArtifact@1
-  displayName: 'publish artifact'
-  inputs:
-    targetPath: '$(Build.ArtifactStagingDirectory)'
-    artifactName: '$(artifactName)'
+# - task: PublishPipelineArtifact@1
+#   displayName: 'publish artifact'
+#   inputs:
+#     targetPath: '$(Build.ArtifactStagingDirectory)'
+#     artifactName: '$(artifactName)'
