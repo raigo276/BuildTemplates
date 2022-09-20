@@ -5,9 +5,9 @@ parameters:
 steps:
 
 - bash: |
-    ls -la $(Build.ArtifactStagingDirectory)/*
+    ls -la '$(System.DefaultWorkingDirectory)/angular-test-fe/dist/angular-test-fe/*'
     mkdir ${{ parameters.outputpath }}
-    cp -R $(Build.ArtifactStagingDirectory)/* ${{ parameters.outputpath }}
+    cp -R '$(System.DefaultWorkingDirectory)/angular-test-fe/dist/angular-test-fe/*' ${{ parameters.outputpath }}
   displayName: Copy published files
   #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
 
