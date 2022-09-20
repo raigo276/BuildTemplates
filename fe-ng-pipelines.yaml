@@ -6,6 +6,7 @@ jobs:
   variables:
     projectRoot: 'src'
     artifactName: 'fe-ng-artifact'   
+    outputPath: './out'
 
   steps:
   - task: NodeTool@0
@@ -19,6 +20,22 @@ jobs:
       npm install
       ng build --configuration production
     displayName: 'npm install and build'
+
+  - bash: |
+      ls -la '$(System.DefaultWorkingDirectory)/angular-test-fe/dist/angular-test-fe/*'
+      mkdir '$(outputPath)'
+      cp -R '$(System.DefaultWorkingDirectory)/angular-test-fe/dist/angular-test-fe/*' '$(outputPath)'
+    displayName: Copy published files
+  #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+
+  - bash: |
+      cat > Dockerfile << EOF
+      FROM nginx:latest
+      WORKDIR /usr/share/nginx/html
+      ADD '$(outputPath)' ./
+      EXPOSE 80
+      EOF
+    displayName: Create Dockerfile
 
   # - template: fe-publish-steps.yaml
   - template: fe-docker-build-steps.yaml

@@ -1,26 +1,4 @@
-parameters:
-- name: outputpath
-  default: './out'
-
 steps:
-
-- bash: |
-    ls -la '$(System.DefaultWorkingDirectory)/angular-test-fe/dist/angular-test-fe/*'
-    mkdir ${{ parameters.outputpath }}
-    cp -R '$(System.DefaultWorkingDirectory)/angular-test-fe/dist/angular-test-fe/*' ${{ parameters.outputpath }}
-  displayName: Copy published files
-  #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
-
-- bash: |
-    cat > Dockerfile << EOF
-    FROM nginx:latest
-    WORKDIR /usr/share/nginx/html
-    ADD ${{ parameters.outputpath }} ./
-    EXPOSE 80
-    EOF
-  displayName: Create Dockerfile
-  #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
-
 - task: Docker@2
   #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
   displayName: Login to ACR
