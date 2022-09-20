@@ -17,7 +17,7 @@ jobs:
       cd angular-test-fe/
       npm install -g @angular/cli
       npm install
-      ng build --prod
+      ng build --configuration production
     displayName: 'npm install and build'
     workingDirectory: '$(Build.SourcesDirectory)'
 
